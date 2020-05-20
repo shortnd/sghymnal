@@ -13,7 +13,7 @@ def test_list():
 
 def test_create():
     assert reverse("players:create") == "/players/create/"
-    assert resolve("/players/create").view_name == "players:create"
+    assert resolve("/players/create/").view_name == "players:create"
 
 
 def test_detail(player: Player):
