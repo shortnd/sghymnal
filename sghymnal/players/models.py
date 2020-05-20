@@ -45,7 +45,7 @@ class PlayerImage(Model):
 
 
 class Bio(Model):
-    lang = CharField("Bio Language", max_length=50)
+    lang = CharField("Language", max_length=50)
     bio = TextField("Bio")
     player = ForeignKey(
         Player,

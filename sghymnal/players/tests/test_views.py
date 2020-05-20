@@ -34,6 +34,23 @@ def test_list_view_show_now_players(rf: RequestFactory):
     response = players_list_view(request)
     assertContains(response, "No Players")
 
+def test_list_view_contains_players(rf: RequestFactory):
+    player1 = PlayerFactory()
+    player2 = PlayerFactory()
+    request = rf.get(reverse("players:list"))
+    request.user = UserFactory()
+    response = players_list_view(request)
+    assertContains(response, player1.name)
+    assertContains(response, player1.squad_number)
+    assertContains(response, player1.position)
+    assertContains(response, player2.name)
+
+def test_list_view_has_add_user_button(rf: RequestFactory):
+    request = rf.get(reverse("players:list"))
+    request.user = UserFactory()
+    response = players_list_view(request)
+    assertContains(response, "Add Player")
+
 # class PlayerCreateViewTests:
 def test_create_view_redirects(rf: RequestFactory):
     request = rf.get(reverse("players:create"))
@@ -47,6 +64,18 @@ def test_create_view_expanded(rf: RequestFactory):
     request.user = UserFactory()
     response = player_create_view(request)
     assertContains(response, "Create Player")
+
+def test_create_view_contains_images(rf: RequestFactory):
+    request = rf.get(reverse("players:create"))
+    request.user = UserFactory()
+    response = player_create_view(request)
+    assertContains(response, "Images")
+
+def test_create_view_contains_bios(rf: RequestFactory):
+    request = rf.get(reverse("players:create"))
+    request.user = UserFactory()
+    response = player_create_view(request)
+    assertContains(response, "Bios")
 
 
 # class PlayerDetailViewTests:

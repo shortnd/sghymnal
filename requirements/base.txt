@@ -12,6 +12,7 @@ django-countries==6.1.2 # https://github.com/SmileyChris/django-countries/
 django-autoslug==1.9.7  # https://github.com/justinmayer/django-autoslug/
 sorl-thumbnail==12.6.3 # https://github.com/jazzband/sorl-thumbnail
 django-simple-history==2.10.0 # https://github.com/treyhunner/django-simple-history
+django-widget-tweaks==1.4.8 # https://github.com/jazzband/django-widget-tweaks
 
 # Django
 # ------------------------------------------------------------------------------

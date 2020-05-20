@@ -5,15 +5,16 @@ All Players
 {% endblock title %}
 
 {% block content %}
-    <h1>All Players</h1>
+    <div class="mb-3">
+        <h1>All Players</h1>
+        <a href="{% url 'players:create' %}" class="btn btn-primary">Add Player</a>
+    </div>
     {% if object_list %}
-        <ul>
         {% for player in object_list %}
-        <li>
-            <a href="{{ player.get_absolute_url }}">{{ player.name }}</a>
-        </li>
+        <a href="{{ player.get_absolute_url }}" class="card p-3 border-0 shadow">
+            {{ player.name }} - {{ player.position }} - {{ player.squad_number }}
+        </a>
         {% endfor %}
-        </ul>
     {% else %}
         <h2>No Players</h2>
     {% endif %}
