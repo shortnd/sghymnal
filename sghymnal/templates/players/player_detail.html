@@ -5,5 +5,32 @@
 {% endblock title %}
 
 {% block content %}
-    <h1>{{ player.name }}</h1>
+    <div class="card">
+        <div class="card-header">
+            <h1>{{ player.name }}</h1>
+        </div>
+        <div class="card-body">
+            {% if player.thumbnail %}
+                <img src="{{ player.thumbnail.path }}" alt="{{ player.name }} thumbnail" />
+            {% endif %}
+            {% if player.position %}
+            <p>Postion: {{ player.position }}</p>
+            {% endif %}
+            {% if player.squad_number %}
+            <p>Squad Number: {{ player.squad_number }}</p>
+            {% endif %}
+            {% if player.country %}
+            <p>Country: {{ player.country.name }} - {{ player.country.flag }}</p>
+            {% endif %}
+            {% if player.team %}
+            <p>Team: {{ player.team }}</p>
+            {% endif %}
+            {% if player.twitter %}
+            <p>Twitter: {{ player.twitter }}</p>
+            {% endif %}
+            {% if player.instagram %}
+            <p>Instagram: {{ player.instagram }}</p>
+            {% endif %}
+        </div>
+    </div>
 {% endblock content %}

@@ -92,6 +92,19 @@ def test_detail_view_expanded(player: Player, rf: RequestFactory):
     response = player_detail_view(request, uuid=player.uuid)
     assertContains(response, f"{player.name}")
 
+def test_detail_view_show_correct_infomation(player: Player, rf: RequestFactory):
+    request = rf.get(reverse("players:detail", kwargs={"uuid": player.uuid}))
+    request.user = UserFactory()
+    response = player_detail_view(request, uuid=player.uuid)
+    assertContains(response, player.name)
+    assertContains(response, player.position)
+    assertContains(response, player.squad_number)
+    assertContains(response, f"{player.country.name} - {player.country.flag}")
+    assertContains(response, player.team)
+    assertContains(response, player.twitter)
+    assertContains(response, player.instagram)
+    assertContains(response, player.thumbnail)
+
 
 # class PlayerUpdateViewTests:
 def test_update_view_redirects(player: Player, rf: RequestFactory):
