@@ -26,7 +26,7 @@ def test_detail(player: Player):
 
 def test_update(player: Player):
     assert (
-        reverse("player:update", kwargs={"uuid": player.uuid})
+        reverse("players:update", kwargs={"uuid": player.uuid})
         == f"/players/{player.uuid}/edit/"
     )
     assert resolve(f"/players/{player.uuid}/edit/").view_name == "players:update"
@@ -34,7 +34,7 @@ def test_update(player: Player):
 
 def test_delete(player: Player):
     assert (
-        reverse("player:delete", kwargs={"uuid": player.uuid})
+        reverse("players:delete", kwargs={"uuid": player.uuid})
         == f"/players/{player.uuid}/delete/"
     )
     assert resolve(f"/players/{player.uuid}/delete/").view_name == "players:delete"

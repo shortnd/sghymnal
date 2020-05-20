@@ -17,6 +17,7 @@ urlpatterns = [
     path("users/", include("sghymnal.users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),
     # Your stuff: custom urls includes go here
+    path("players/", include("sghymnal.players.urls", namespace="players")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # API URLS

@@ -1,4 +1,5 @@
 from django.db.models import CharField, Model, ForeignKey, CASCADE, IntegerField, TextField
+from django.urls import reverse
 
 from autoslug import AutoSlugField
 from django_countries.fields import CountryField
@@ -26,6 +27,14 @@ class Player(BaseModel):
     thumbnail = ImageField("Player Thumbnail", upload_to=thumnail_upload_path, blank=True)
 
 
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse("players:detail", kwargs={"uuid": self.uuid})
+
+
+
 class PlayerImage(Model):
     image = ImageField("Player Image", upload_to=image_upload_path)
     player = ForeignKey(
@@ -38,3 +47,8 @@ class PlayerImage(Model):
 class Bio(Model):
     lang = CharField("Bio Language", max_length=50)
     bio = TextField("Bio")
+    player = ForeignKey(
+        Player,
+        on_delete=CASCADE,
+        related_name='bios'
+    )

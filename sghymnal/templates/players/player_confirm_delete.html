@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Delete {{ player.name }}
+{% endblock title %}
+
+{% block content %}
+<div class="card">
+    <div class="card-body">
+        <strong>Are you sure you want to delete {{ playaer.name }}?</strong>
+        <form action="." method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+    </div>
+</div>
+{% endblock content %}

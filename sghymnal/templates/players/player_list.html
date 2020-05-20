@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}
+All Players
+{% endblock title %}
+
+{% block content %}
+    <h1>All Players</h1>
+    {% if object_list %}
+        <ul>
+        {% for player in object_list %}
+        <li>
+            <a href="{{ player.get_absolute_url }}">{{ player.name }}</a>
+        </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <h2>No Players</h2>
+    {% endif %}
+{% endblock content %}
