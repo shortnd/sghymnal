@@ -4,6 +4,9 @@ language: python
 python:
   - "3.8"
 
+env:
+  - REDIS_URL=redis://redis:6379/0
+
 services:
   - postgresql
   - redis-server
