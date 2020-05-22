@@ -32,6 +32,14 @@
             {% if player.instagram %}
             <p>Instagram: {{ player.instagram }}</p>
             {% endif %}
+            {% if player.bio_set.all %}
+                {% for bio in players.bios_set %}
+                <h2>{{ bio.lang }}</h2>
+                <p>
+                    {{ bio.bio }}
+                </p>
+                {% endfor %}
+            {% endif %}
         </div>
         <div class="card-body">
             <a href="{% url 'players:update' player.uuid %}" class="btn btn-success">Edit Player</a>

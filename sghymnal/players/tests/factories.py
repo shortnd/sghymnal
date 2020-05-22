@@ -3,7 +3,23 @@ import factory.fuzzy
 from factory import DjangoModelFactory, Faker
 
 from ..constants import Position
-from ..models import Player
+from ..models import Player, Bio, PlayerImage
+
+
+class PlayerBioFactory(DjangoModelFactory):
+    lang = factory.fuzzy.FuzzyText()
+    bio = Faker("paragraphs")
+    # player = factory.SubFactory(PlayerFactory)
+
+    class Meta:
+        model = Bio
+
+
+class PlayerImageFactory(DjangoModelFactory):
+    image = Faker("image_url")
+
+    class Meta:
+        model = PlayerImage
 
 
 class PlayerFactory(DjangoModelFactory):
@@ -16,6 +32,8 @@ class PlayerFactory(DjangoModelFactory):
     team = factory.fuzzy.FuzzyText()
     twitter = factory.fuzzy.FuzzyText()
     instagram = factory.fuzzy.FuzzyText()
+    bios = factory.RelatedFactoryList(PlayerBioFactory, "player")
+    images = factory.RelatedFactoryList(PlayerImageFactory, "player")
 
     class Meta:
         model = Player
