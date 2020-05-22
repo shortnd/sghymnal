@@ -1,8 +1,6 @@
-from typing import Any, Sequence
-
 import factory
-from factory import DjangoModelFactory, Faker
 import factory.fuzzy
+from factory import DjangoModelFactory, Faker
 
 from ..constants import Position
 from ..models import Player

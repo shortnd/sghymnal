@@ -1,13 +1,13 @@
 from django.forms import ModelForm, inlineformset_factory
 
-from .models import Player, PlayerImage, Bio
+from .models import Bio, Player, PlayerImage
+
 
 class PlayerImageForm(ModelForm):
     class Meta:
         model = PlayerImage
-        fields = [
-            "image"
-        ]
+        fields = ["image"]
+
 
 PlayerImageFormSet = inlineformset_factory(
     parent_model=Player,
@@ -15,25 +15,18 @@ PlayerImageFormSet = inlineformset_factory(
     form=PlayerImageForm,
     fields=["image"],
     extra=2,
-    can_delete=True
+    can_delete=True,
 )
 
 
 class PlayerBioForm(ModelForm):
     class Meta:
         model = Bio
-        fields = [
-            "lang",
-            "bio"
-        ]
+        fields = ["lang", "bio"]
+
 
 PlayerBioFormSet = inlineformset_factory(
-    Player,
-    Bio,
-    form=PlayerBioForm,
-    fields=["lang", "bio"],
-    extra=2,
-    can_delete=True
+    Player, Bio, form=PlayerBioForm, fields=["lang", "bio"], extra=2, can_delete=True
 )
 
 
@@ -48,5 +41,5 @@ class PlayerForm(ModelForm):
             "team",
             "twitter",
             "instagram",
-            "thumbnail"
+            "thumbnail",
         ]

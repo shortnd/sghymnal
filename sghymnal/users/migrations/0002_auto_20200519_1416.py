@@ -6,38 +6,40 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('users', '0001_initial'),
+        ("users", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='user',
-            name='feed_allowed',
-            field=models.BooleanField(default=False, verbose_name='Feed Allowed'),
+            model_name="user",
+            name="feed_allowed",
+            field=models.BooleanField(default=False, verbose_name="Feed Allowed"),
         ),
         migrations.AddField(
-            model_name='user',
-            name='foes_allowed',
-            field=models.BooleanField(default=False, verbose_name='Foes Allowed'),
+            model_name="user",
+            name="foes_allowed",
+            field=models.BooleanField(default=False, verbose_name="Foes Allowed"),
         ),
         migrations.AddField(
-            model_name='user',
-            name='push_notifications_allowed',
-            field=models.BooleanField(default=False, verbose_name='Push Notifications Allowed'),
+            model_name="user",
+            name="push_notifications_allowed",
+            field=models.BooleanField(
+                default=False, verbose_name="Push Notifications Allowed"
+            ),
         ),
         migrations.AddField(
-            model_name='user',
-            name='roster_allowed',
-            field=models.BooleanField(default=False, verbose_name='Rosters Allowed'),
+            model_name="user",
+            name="roster_allowed",
+            field=models.BooleanField(default=False, verbose_name="Rosters Allowed"),
         ),
         migrations.AddField(
-            model_name='user',
-            name='songbook_allowed',
-            field=models.BooleanField(default=False, verbose_name='Songbook Allowed'),
+            model_name="user",
+            name="songbook_allowed",
+            field=models.BooleanField(default=False, verbose_name="Songbook Allowed"),
         ),
         migrations.AddField(
-            model_name='user',
-            name='users_allowed',
-            field=models.BooleanField(default=False, verbose_name='Users Allowed'),
+            model_name="user",
+            name="users_allowed",
+            field=models.BooleanField(default=False, verbose_name="Users Allowed"),
         ),
     ]

@@ -1,7 +1,7 @@
 import pytest
 
-from ..forms import PlayerForm
-from .factories import PlayerFactory
+# from ..forms import PlayerForm
+# from .factories import PlayerFactory
 
 pytestmark = pytest.mark.django_db
 

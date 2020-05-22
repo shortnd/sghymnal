@@ -1,5 +1,6 @@
 from django.db.models import TextChoices
 
+
 class Position(TextChoices):
     FORWARD = "Forward", "Forward"
     DEFENDER = "Defender", "Defender"

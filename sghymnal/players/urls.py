@@ -1,6 +1,12 @@
 from django.urls import path
 
-from .views import players_list_view, player_create_view, player_detail_view, player_update_view, player_delete_view
+from .views import (
+    player_create_view,
+    player_delete_view,
+    player_detail_view,
+    player_update_view,
+    players_list_view,
+)
 
 app_name = "players"
 

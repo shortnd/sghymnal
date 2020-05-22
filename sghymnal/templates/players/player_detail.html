@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}
  {{ player.name }}
@@ -11,7 +12,7 @@
         </div>
         <div class="card-body">
             {% if player.thumbnail %}
-                <img src="{{ player.thumbnail.path }}" alt="{{ player.name }} thumbnail" />
+                <img src="{{ player.thumbnail }}" alt="{{ player.name }} thumbnail" />
             {% endif %}
             {% if player.position %}
             <p>Postion: {{ player.position }}</p>
@@ -20,7 +21,7 @@
             <p>Squad Number: {{ player.squad_number }}</p>
             {% endif %}
             {% if player.country %}
-            <p>Country: {{ player.country.name }} - {{ player.country.flag }}</p>
+            <p>Country: {{ player.country.name }} - <img src="{{ player.country.flag }}" /> </p>
             {% endif %}
             {% if player.team %}
             <p>Team: {{ player.team }}</p>
@@ -31,6 +32,10 @@
             {% if player.instagram %}
             <p>Instagram: {{ player.instagram }}</p>
             {% endif %}
+        </div>
+        <div class="card-body">
+            <a href="{% url 'players:update' player.uuid %}" class="btn btn-success">Edit Player</a>
+            <a href="{% url 'players:delete' player.uuid %}" class="btn btn-danger">Delete Player</a>
         </div>
     </div>
 {% endblock content %}

@@ -13,37 +13,126 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Player',
+            name="Player",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('uuid', models.UUIDField(db_index=True, default=uuid.uuid4, editable=False, unique=True)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('name', models.CharField(max_length=255, verbose_name='Player Name')),
-                ('slug', autoslug.fields.AutoSlugField(editable=False, populate_from='name', unique=True, verbose_name='Player Slug')),
-                ('country', django_countries.fields.CountryField(blank=True, max_length=2, verbose_name='Player Country')),
-                ('postition', models.CharField(blank=True, choices=[('Forward', 'Forward'), ('Defender', 'Defender'), ('Midfielder', 'Midfielder'), ('Goalkeeper', 'Goalkeeper'), ('Head Coach', 'Head Coach'), ('Assistant Coach', 'Assistant Coach'), ('Goalkeeper Coach', 'Goalkeeper Coach'), ('Technical Director', 'Technical Director'), ('Associate Head Coach', 'Associate Head Coach')], max_length=50, verbose_name='Position')),
-                ('squad_number', models.IntegerField(blank=True, verbose_name='Players Number')),
-                ('team', models.CharField(blank=True, max_length=255, null=True, verbose_name="Player's Team")),
-                ('twitter', models.CharField(blank=True, max_length=255, verbose_name='Twitter')),
-                ('instagram', models.CharField(blank=True, max_length=255, verbose_name='Instagram')),
-                ('thumbnail', sorl.thumbnail.fields.ImageField(upload_to=sghymnal.players.models.thumnail_upload_path, verbose_name='Player Thumbnail')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "uuid",
+                    models.UUIDField(
+                        db_index=True, default=uuid.uuid4, editable=False, unique=True
+                    ),
+                ),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                ("name", models.CharField(max_length=255, verbose_name="Player Name")),
+                (
+                    "slug",
+                    autoslug.fields.AutoSlugField(
+                        editable=False,
+                        populate_from="name",
+                        unique=True,
+                        verbose_name="Player Slug",
+                    ),
+                ),
+                (
+                    "country",
+                    django_countries.fields.CountryField(
+                        blank=True, max_length=2, verbose_name="Player Country"
+                    ),
+                ),
+                (
+                    "postition",
+                    models.CharField(
+                        blank=True,
+                        choices=[
+                            ("Forward", "Forward"),
+                            ("Defender", "Defender"),
+                            ("Midfielder", "Midfielder"),
+                            ("Goalkeeper", "Goalkeeper"),
+                            ("Head Coach", "Head Coach"),
+                            ("Assistant Coach", "Assistant Coach"),
+                            ("Goalkeeper Coach", "Goalkeeper Coach"),
+                            ("Technical Director", "Technical Director"),
+                            ("Associate Head Coach", "Associate Head Coach"),
+                        ],
+                        max_length=50,
+                        verbose_name="Position",
+                    ),
+                ),
+                (
+                    "squad_number",
+                    models.IntegerField(blank=True, verbose_name="Players Number"),
+                ),
+                (
+                    "team",
+                    models.CharField(
+                        blank=True,
+                        max_length=255,
+                        null=True,
+                        verbose_name="Player's Team",
+                    ),
+                ),
+                (
+                    "twitter",
+                    models.CharField(
+                        blank=True, max_length=255, verbose_name="Twitter"
+                    ),
+                ),
+                (
+                    "instagram",
+                    models.CharField(
+                        blank=True, max_length=255, verbose_name="Instagram"
+                    ),
+                ),
+                (
+                    "thumbnail",
+                    sorl.thumbnail.fields.ImageField(
+                        upload_to=sghymnal.players.models.thumnail_upload_path,
+                        verbose_name="Player Thumbnail",
+                    ),
+                ),
             ],
-            options={
-                'abstract': False,
-            },
+            options={"abstract": False,},
         ),
         migrations.CreateModel(
-            name='PlayerImage',
+            name="PlayerImage",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('image', sorl.thumbnail.fields.ImageField(upload_to=sghymnal.players.models.image_upload_path, verbose_name='Player Image')),
-                ('player', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='images', to='players.Player')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "image",
+                    sorl.thumbnail.fields.ImageField(
+                        upload_to=sghymnal.players.models.image_upload_path,
+                        verbose_name="Player Image",
+                    ),
+                ),
+                (
+                    "player",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="images",
+                        to="players.Player",
+                    ),
+                ),
             ],
         ),
     ]
