@@ -6,7 +6,7 @@ python:
 
 services:
   - postgresql
-  - redis
+  - redis-server
 jobs:
   include:
     - name: "Linter"
