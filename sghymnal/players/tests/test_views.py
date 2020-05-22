@@ -116,7 +116,9 @@ def test_detail_view_show_correct_infomation(player: Player, rf: RequestFactory)
     assertContains(response, player.name)
     assertContains(response, player.position)
     assertContains(response, player.squad_number)
-    assertContains(response, f"{player.country.name} - {player.country.flag}")
+    assertContains(
+        response, f'{player.country.name} - <img src="{player.country.flag}" />'
+    )
     assertContains(response, player.team)
     assertContains(response, player.twitter)
     assertContains(response, player.instagram)
