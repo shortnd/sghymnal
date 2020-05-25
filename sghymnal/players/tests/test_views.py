@@ -15,6 +15,7 @@ from ..views import (
     players_list_view,
 )
 from .factories import PlayerFactory
+import tempfile
 
 pytestmark = pytest.mark.django_db
 
@@ -58,6 +59,14 @@ class TestPlayersListView:
 
 
 class TestPlayerCreateView:
+    def _create_image(self):
+        from PIL import Image
+
+        with tempfile.NamedTemporaryFile(suffix=".png", delete=False) as f:
+            image = Image.new("RGB", (200, 200), "white")
+            image.save(f, "PNG")
+        return open(f.name, mode="rb")
+
     def test_create_view_redirects(self, rf: RequestFactory):
         request = rf.get(reverse("players:create"))
         request.user = AnonymousUser()
@@ -84,6 +93,40 @@ class TestPlayerCreateView:
         response = player_create_view(request)
         assertContains(response, "Bios")
         assert response.context_data["bios"]
+
+    def test_create_view_post(self, rf: RequestFactory):
+        proto_player = PlayerFactory()
+        player_thumbnail = self._create_image()
+        player_image = self._create_image()
+        form_data = {
+            "name": proto_player.name,
+            "country": proto_player.country,
+            "position": proto_player.position,
+            "squad_number": proto_player.squad_number,
+            "team": proto_player.team,
+            "twitter": proto_player.twitter,
+            "instagram": proto_player.instagram,
+            "thumbnail": player_thumbnail,
+            "images-TOTAL_FORMS": 2,
+            "images-INITIAL_FORMS": 0,
+            "images-MIN_NUM_FORMS": 0,
+            "images-MAX_NUM_FORMS": 1000,
+            "images-0-id": 0,
+            "images-0-player": 0,
+            "images-0-image": player_image,
+            "bios-TOTAL_FORMS": 2,
+            "bios-INITIAL_FORMS": 0,
+            "bios-MIN_NUM_FORMS": 0,
+            "bios-MAX_NUM_FORMS": 1000,
+            "bios-0-id": 0,
+            "bios-0-player": 0,
+            "bios-0-lang": "en",
+            "bios-0-bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc hendrerit neque quis sapien vehicula cursus. Vestibulum faucibus tincidunt felis a laoreet. Sed nec orci sit amet justo sollicitudin commodo. Vivamus facilisis rhoncus arcu, nec feugiat ipsum consequat non. Nullam id urna tortor. Donec quis enim vel diam rhoncus vehicula ut ac metus. Sed sed massa vitae mauris euismod laoreet. Praesent porttitor blandit metus, sed semper leo pellentesque sit amet. Nullam eleifend quam sit amet tortor volutpat, id pulvinar nulla elementum. Nulla et erat metus.",
+        }
+        request = rf.post(reverse("players:create"), form_data)
+        request.user = UserFactory()
+        response = player_create_view(request, form_data)
+        assert response.status_code == 302
 
 
 class TestPlayerDetailView:
