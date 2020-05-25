@@ -1,9 +1,19 @@
+import tempfile
+
 import factory
 import factory.fuzzy
 from factory import DjangoModelFactory, Faker
+from PIL import Image
 
 from ..constants import Position
-from ..models import Player, Bio, PlayerImage
+from ..models import Bio, Player, PlayerImage
+
+
+def create_image():
+    with tempfile.NamedTemporaryFile(suffix=".png", delete=False) as f:
+        image = Image.new("RGB", (200, 200), "white")
+        image.save(f, "PNG")
+    return open(f.name, mode="rb")
 
 
 class PlayerBioFactory(DjangoModelFactory):

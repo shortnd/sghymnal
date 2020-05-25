@@ -14,8 +14,7 @@ from ..views import (
     player_update_view,
     players_list_view,
 )
-from .factories import PlayerFactory
-import tempfile
+from .factories import PlayerFactory, create_image
 
 pytestmark = pytest.mark.django_db
 
@@ -59,14 +58,6 @@ class TestPlayersListView:
 
 
 class TestPlayerCreateView:
-    def _create_image(self):
-        from PIL import Image
-
-        with tempfile.NamedTemporaryFile(suffix=".png", delete=False) as f:
-            image = Image.new("RGB", (200, 200), "white")
-            image.save(f, "PNG")
-        return open(f.name, mode="rb")
-
     def test_create_view_redirects(self, rf: RequestFactory):
         request = rf.get(reverse("players:create"))
         request.user = AnonymousUser()
@@ -96,8 +87,7 @@ class TestPlayerCreateView:
 
     def test_create_view_post(self, rf: RequestFactory):
         proto_player = PlayerFactory()
-        player_thumbnail = self._create_image()
-        player_image = self._create_image()
+        player_image = create_image()
         form_data = {
             "name": proto_player.name,
             "country": proto_player.country,
@@ -106,7 +96,7 @@ class TestPlayerCreateView:
             "team": proto_player.team,
             "twitter": proto_player.twitter,
             "instagram": proto_player.instagram,
-            "thumbnail": player_thumbnail,
+            "thumbnail": create_image(),
             "images-TOTAL_FORMS": 2,
             "images-INITIAL_FORMS": 0,
             "images-MIN_NUM_FORMS": 0,
@@ -121,7 +111,14 @@ class TestPlayerCreateView:
             "bios-0-id": 0,
             "bios-0-player": 0,
             "bios-0-lang": "en",
-            "bios-0-bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc hendrerit neque quis sapien vehicula cursus. Vestibulum faucibus tincidunt felis a laoreet. Sed nec orci sit amet justo sollicitudin commodo. Vivamus facilisis rhoncus arcu, nec feugiat ipsum consequat non. Nullam id urna tortor. Donec quis enim vel diam rhoncus vehicula ut ac metus. Sed sed massa vitae mauris euismod laoreet. Praesent porttitor blandit metus, sed semper leo pellentesque sit amet. Nullam eleifend quam sit amet tortor volutpat, id pulvinar nulla elementum. Nulla et erat metus.",
+            "bios-0-bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+            "Nunc hendrerit neque quis sapien vehicula cursus. Vestibulum faucibus"
+            "tincidunt felis a laoreet. Sed nec orci sit amet justo sollicitudin commodo."
+            "Vivamus facilisis rhoncus arcu, nec feugiat ipsum consequat non. Nullam"
+            " id urna tortor. Donec quis enim vel diam rhoncus vehicula ut ac metus. "
+            "Sed sed massa vitae mauris euismod laoreet. Praesent porttitor blandit metus,"
+            " sed semper leo pellentesque sit amet. Nullam eleifend quam sit amet tortor "
+            "volutpat, id pulvinar nulla elementum. Nulla et erat metus.",
         }
         request = rf.post(reverse("players:create"), form_data)
         request.user = UserFactory()
