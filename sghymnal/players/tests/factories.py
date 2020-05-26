@@ -1,16 +1,16 @@
 import tempfile
+from base64 import b64decode
+from random import randint
 
-from django.core.files.uploadedfile import SimpleUploadedFile
 import factory
 import factory.fuzzy
+from django.core.files.base import ContentFile
+from django.core.files.uploadedfile import SimpleUploadedFile
 from factory import DjangoModelFactory, Faker
 from PIL import Image
 
 from ..constants import Position
 from ..models import Bio, Player, PlayerImage
-from random import randint
-from base64 import b64decode
-from django.core.files.base import ContentFile
 
 
 def create_image():
