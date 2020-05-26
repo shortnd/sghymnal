@@ -1,11 +1,8 @@
-from rest_framework import status
-from rest_framework.decorators import action
 from rest_framework.mixins import ListModelMixin, RetrieveModelMixin
-from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 
-from ..models import Player
-from .serializers import PlayerSerializer
+from sghymnal.players.api.serializers import PlayerSerializer
+from sghymnal.players.models import Player
 
 
 class PlayersViewSet(RetrieveModelMixin, ListModelMixin, GenericViewSet):
