@@ -32,16 +32,20 @@
             {% if player.instagram %}
             <p>Instagram: {{ player.instagram }}</p>
             {% endif %}
-            {% if player.bio_set.all %}
-                {% for bio in players.bios_set %}
-                <h2>{{ bio.lang }}</h2>
-                <p>
-                    {{ bio.bio }}
-                </p>
+            {% if player.bios.all|length > 0 %}
+                {% for bio in player.bios.all %}
+                    <h2>{{ bio.lang }}</h2>
+                    <div>{{ bio.bio|linebreaksbr }} </div>
+                {% endfor %}
+            {% endif %}
+            {% if player.images.all|length > 0 %}
+                <h2>Images</h2>
+                {% for image in player.images.all %}
+                    <img src="{{ image.image.url }}" alt="" />
                 {% endfor %}
             {% endif %}
         </div>
-        <div class="card-body">
+        <div class="card-footer">
             <a href="{% url 'players:update' player.uuid %}" class="btn btn-success">Edit Player</a>
             <a href="{% url 'players:delete' player.uuid %}" class="btn btn-danger">Delete Player</a>
         </div>

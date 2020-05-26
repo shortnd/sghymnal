@@ -21,6 +21,8 @@ def thumnail_upload_path(instance, filename):
 
 
 def image_upload_path(instance, filename):
+    if hasattr(instance, "player"):
+        return f"players/{instance.player.slug}/images/{filename}"
     return f"players/{instance.slug}/images/{filename}"
 
 
@@ -34,7 +36,7 @@ class Player(BaseModel):
     position = CharField(
         "Position", max_length=50, choices=Position.choices, blank=True
     )
-    squad_number = IntegerField("Players Number", blank=True)
+    squad_number = IntegerField("Players Number", blank=True, null=True)
     team = CharField("Player's Team", max_length=255, blank=True, null=True)
     twitter = CharField("Twitter", max_length=255, blank=True)
     instagram = CharField("Instagram", max_length=255, blank=True)
@@ -50,8 +52,8 @@ class Player(BaseModel):
 
 
 class PlayerImage(Model):
-    image = ImageField("Player Image", upload_to=image_upload_path)
     player = ForeignKey(Player, on_delete=CASCADE, related_name="images")
+    image = ImageField("Player Image", upload_to=image_upload_path)
 
 
 class Bio(Model):
