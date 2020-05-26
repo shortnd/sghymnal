@@ -36,7 +36,7 @@ class Player(BaseModel):
     position = CharField(
         "Position", max_length=50, choices=Position.choices, blank=True
     )
-    squad_number = IntegerField("Players Number", blank=True, null=True)
+    squad_number = IntegerField("Players Number", blank=True, default=0)
     team = CharField("Player's Team", max_length=255, blank=True, null=True)
     twitter = CharField("Twitter", max_length=255, blank=True)
     instagram = CharField("Instagram", max_length=255, blank=True)
