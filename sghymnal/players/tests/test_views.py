@@ -35,7 +35,7 @@ class TestPlayersListView:
         response = players_list_view(request)
         assertContains(response, "All Players")
 
-    def test_list_view_show_now_players(self, rf: RequestFactory):
+    def test_list_view_show_no_players(self, rf: RequestFactory):
         request = rf.get(reverse("players:list"))
         request.user = UserFactory()
         response = players_list_view(request)
@@ -52,7 +52,7 @@ class TestPlayersListView:
         assertContains(response, player1.position)
         assertContains(response, player2.name)
 
-    def test_list_view_has_add_user_button(self, rf: RequestFactory):
+    def test_list_view_has_add_player_button(self, rf: RequestFactory):
         request = rf.get(reverse("players:list"))
         request.user = UserFactory()
         response = players_list_view(request)

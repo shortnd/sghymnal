@@ -5,5 +5,26 @@
 {% endblock title %}
 
 {% block content %}
-    <h1>{{ roster.title }}</h1>
+    <div class="card">
+        <div class="card-header">
+            <h1>{{ roster.title }}</h1>
+        </div>
+        <div class="card-body">
+            <p>Season: {{ roster.season }}</p>
+            <p>Active: {{ roster.active }}</p>
+            <p>Default: {{ roster.default }}</p>
+            <h2>Players</h2>
+            {% for player in roster.players.all %}
+                <div>
+                    {{ player }}
+                </div>
+            {% empty %}
+                <h3>No Players in Roster</h3>
+            {% endfor %}
+        </div>
+        <div class="card-footer">
+            <a href="{% url 'rosters:edit' roster.uuid %}" class="btn btn-success">Edit Roster</a>
+            <a href="{% url 'rosters:delete' roster.uuid %}" class="btn btn-danger">Delete Roster</a>
+        </div>
+    </div>
 {% endblock content %}

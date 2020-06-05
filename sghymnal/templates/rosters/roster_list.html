@@ -1,12 +1,21 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Rosters
+All Rosters
 {% endblock title %}
 
 {% block content %}
-    <h1>Rosters</h1>
+    <div class="mb-3">
+        <h1>All Rosters</h1>
+        <a href="{% url 'rosters:create' %}" class="btn btn-primary">Add Roster</a>
+    </div>
     {% for roster in object_list %}
-        {{ roster.title }}
+        <a href={{ roster.get_absolute_url }} class="card shadow border text-dark">
+            <div class="card-body">
+                {{ roster.title }} - {{ roster.players.count }}
+            </div>
+        </a>
+    {% empty %}
+        <h2>No Rosters</h2>
     {% endfor %}
 {% endblock content %}

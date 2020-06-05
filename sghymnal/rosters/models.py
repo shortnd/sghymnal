@@ -16,4 +16,4 @@ class Roster(BaseModel):
         return self.title
 
     def get_absolute_url(self):
-        return reverse("rosters:detail", kwargs={"pk": self.pk})
+        return reverse("rosters:detail", kwargs={"uuid": self.uuid})

@@ -26,10 +26,10 @@ def test_detail(roster: Roster):
 
 def test_update(roster: Roster):
     assert (
-        reverse("rosters:update", kwargs={"uuid": roster.uuid})
+        reverse("rosters:edit", kwargs={"uuid": roster.uuid})
         == f"/rosters/{roster.uuid}/edit/"
     )
-    assert resolve(f"/rosters/{roster.uuid}/edit/").view_name == "rosters:update"
+    assert resolve(f"/rosters/{roster.uuid}/edit/").view_name == "rosters:edit"
 
 
 def test_delete(roster: Roster):

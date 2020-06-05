@@ -40,6 +40,7 @@ roster_detail_view = RosterDetailView.as_view()
 class RosterUpdateView(LoginRequiredMixin, UpdateView):
     model = Roster
     form_class = RosterForm
+    action = "Update"
 
     def get_object(self, queryset=None):
         return Roster.objects.get(uuid=self.kwargs.get("uuid"))
