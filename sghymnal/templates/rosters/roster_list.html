@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Rosters
+{% endblock title %}
+
+{% block content %}
+    <h1>Rosters</h1>
+    {% for roster in object_list %}
+        {{ roster.title }}
+    {% endfor %}
+{% endblock content %}

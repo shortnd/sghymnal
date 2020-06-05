@@ -37,4 +37,4 @@ def test_delete(roster: Roster):
         reverse("rosters:delete", kwargs={"uuid": roster.uuid})
         == f"/rosters/{roster.uuid}/delete/"
     )
-    assert resolve(f"/rosters/{roster.uuid}/delete/").view_name == "roster:delete"
+    assert resolve(f"/rosters/{roster.uuid}/delete/").view_name == "rosters:delete"
