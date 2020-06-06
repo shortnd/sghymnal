@@ -1,0 +1,14 @@
+from rest_framework.mixins import ListModelMixin, RetrieveModelMixin
+from rest_framework.viewsets import GenericViewSet
+from django_filters import rest_framework as filters
+
+from ..models import Roster
+from .serializers import RosterSerializer
+
+
+class RostersViewSet(RetrieveModelMixin, ListModelMixin, GenericViewSet):
+    serializer_class = RosterSerializer
+    queryset = Roster.objects.all()
+    filter_backends = (filters.DjangoFilterBackend,)
+    filterset_fields = ("active", "default")
+    lookup_field = "uuid"
