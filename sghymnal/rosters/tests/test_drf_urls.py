@@ -14,8 +14,8 @@ def test_roster_list():
 def test_roster_detail(roster: Roster):
     assert (
         reverse("roster-api:roster-detail", kwargs={"uuid": roster.uuid})
-        == f"/api/rosters/{roster.uuid}"
+        == f"/api/rosters/{roster.uuid}/"
     )
-    assert resolve(f"/api/players/{roster.uuid}/").view_name == reverse(
-        "roster-api:roster-detail"
+    assert (
+        resolve(f"/api/rosters/{roster.uuid}/").view_name == "roster-api:roster-detail"
     )
