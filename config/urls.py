@@ -25,8 +25,8 @@ urlpatterns = [
 urlpatterns += [
     # API base url
     path("api/", include("config.api_router")),
-    path("api/", include("sghymnal.players.api_router")),
-    path("api/", include("sghymnal.rosters.api_router")),
+    # path("api/", include("sghymnal.players.api_router")),
+    # path("api/", include("sghymnal.rosters.api_router")),
     # DRF auth token
     path("auth-token/", obtain_auth_token),
 ]
