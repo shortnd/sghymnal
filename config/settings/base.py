@@ -81,6 +81,7 @@ LOCAL_APPS = [
     "sghymnal.users.apps.UsersConfig",
     "sghymnal.players.apps.PlayersConfig",
     "sghymnal.rosters.apps.RostersConfig",
+    "sghymnal.foes.apps.FoesConfig",
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
