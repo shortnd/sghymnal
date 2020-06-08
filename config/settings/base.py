@@ -75,7 +75,7 @@ THIRD_PARTY_APPS = [
     "django_countries",
     "widget_tweaks",
     "django_filters",
-    "colorfield",
+    "colorful",
 ]
 
 LOCAL_APPS = [

@@ -1,5 +1,5 @@
 from autoslug import AutoSlugField
-from colorfield.fields import ColorField
+from colorful.fields import RGBColorField
 from django.db.models import CASCADE, BooleanField, CharField, ForeignKey, IntegerField
 from django.urls import reverse
 from sorl.thumbnail import ImageField
@@ -20,9 +20,9 @@ class Foe(BaseModel):
     )
     competition = CharField("Competition", max_length=255, blank=True)
     logo = ImageField("Foe Logo", upload_to=foe_upload_path, blank=True)
-    background_color = ColorField("Background Color", default="#FF0000")
-    accent_color = ColorField("Accent Color", default="#FFFF00")
-    text_color = ColorField("Text Color", default="#FFFFFF")
+    background_color = RGBColorField("Background Color", default="#FF0000")
+    accent_color = RGBColorField("Accent Color", default="#FFFF00")
+    text_color = RGBColorField("Text Color", default="#FFFFFF")
     season = CharField("Season", max_length=255)
     active = BooleanField("Active", default=True)
 

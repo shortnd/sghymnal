@@ -114,20 +114,20 @@ class TestFoeDetailView:
 
 class TestFoeUpdateView:
     def test_update_view_redirects(self, foe: Foe, rf: RequestFactory):
-        request = rf.get(reverse("foe:edit", kwargs={"uuid": foe.uuid}))
+        request = rf.get(reverse("foes:edit", kwargs={"uuid": foe.uuid}))
         request.user = AnonymousUser()
         response = foe_update_view(request, uuid=foe.uuid)
         assert response.status_code == 302
         assert response.url == f"/accounts/login/?next=/foes/{foe.uuid}/edit/"
 
     def test_update_view_expanded(self, foe: Foe, rf: RequestFactory):
-        request = rf.get(reverse("foe:edit", kwargs={"uuid": foe.uuid}))
+        request = rf.get(reverse("foes:edit", kwargs={"uuid": foe.uuid}))
         request.user = UserFactory()
         response = foe_update_view(request, uuid=foe.uuid)
         assertContains(response, "Update Foe")
 
     def test_update_view_contains_players(self, foe: Foe, rf: RequestFactory):
-        request = rf.get(reverse("foe:edit", kwargs={"uuid": foe.uuid}))
+        request = rf.get(reverse("foes:edit", kwargs={"uuid": foe.uuid}))
         request.user = UserFactory()
         response = foe_update_view(request, uuid=foe.uuid)
         assert response.context_data["players"]
@@ -135,14 +135,14 @@ class TestFoeUpdateView:
 
 class TestFoeDeleteView:
     def test_delete_view_redirects(self, foe: Foe, rf: RequestFactory):
-        request = rf.get(reverse("foe:delete", kwargs={"uuid": foe.uuid}))
+        request = rf.get(reverse("foes:delete", kwargs={"uuid": foe.uuid}))
         request.user = AnonymousUser()
         response = foe_delete_view(request, uuid=foe.uuid)
         assert response.status_code == 302
         assert response.url == f"/accounts/login/?next=/foes/{foe.uuid}/delete/"
 
     def test_delete_view_expanded(self, foe: Foe, rf: RequestFactory):
-        request = rf.get(reverse("foe:delete", kwargs={"uuid": foe.uuid}))
+        request = rf.get(reverse("foes:delete", kwargs={"uuid": foe.uuid}))
         request.user = UserFactory()
         response = foe_delete_view(request, uuid=foe.uuid)
         assertContains(response, f"Delete {foe.opponent}")
