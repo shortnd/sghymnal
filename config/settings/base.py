@@ -75,6 +75,7 @@ THIRD_PARTY_APPS = [
     "django_countries",
     "widget_tweaks",
     "django_filters",
+    "colorfield",
 ]
 
 LOCAL_APPS = [
@@ -83,6 +84,8 @@ LOCAL_APPS = [
     "sghymnal.rosters.apps.RostersConfig",
     "sghymnal.foes.apps.FoesConfig",
     # Your stuff: custom apps go here
+    # Third Party Django Cleanup
+    "django_cleanup.apps.CleanupConfig",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS

@@ -1,8 +1,9 @@
 import pytest
+from django.urls import resolve, reverse
 
 from ..models import Foe
 
-from django.urls import reverse, resolve
+pytestmark = pytest.mark.django_db
 
 
 class TestFoesUrls:
@@ -11,7 +12,7 @@ class TestFoesUrls:
         assert resolve("/foes/").view_name == "foes:list"
 
     def test_foes_create(self):
-        assert reverse("foes:create") == "/foes/create"
+        assert reverse("foes:create") == "/foes/create/"
         assert resolve("/foes/create/").view_name == "foes:create"
 
     def test_foes_detail(self, foe: Foe):

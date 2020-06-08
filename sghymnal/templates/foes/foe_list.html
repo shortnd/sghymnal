@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}
+All Foes
+{% endblock title %}
+
+{% block content %}
+    <div class="mb-3">
+        <h1>All Foes</h1>
+        <a href="{% url 'foes:create' %}" class="btn btn-primary">Create Foe</a>
+    </div>
+    {% for foe in object_list %}
+        <a href="{{ foe.get_absolute_url }}" class="card shadow border text-dark">
+            <span class="card-body">{{ foe }}</span>
+        </a>
+    {% empty %}
+        <h2>No Foes</h2>
+    {% endfor %}
+{% endblock content %}

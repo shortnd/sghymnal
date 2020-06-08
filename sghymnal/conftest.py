@@ -1,5 +1,7 @@
 import pytest
 
+from sghymnal.foes.models import Foe
+from sghymnal.foes.tests.factories import FoeFactory
 from sghymnal.players.models import Player
 from sghymnal.players.tests.factories import PlayerFactory
 from sghymnal.rosters.models import Roster
@@ -26,3 +28,8 @@ def player() -> Player:
 @pytest.fixture
 def roster() -> Roster:
     return RosterFactory()
+
+
+@pytest.fixture
+def foe() -> Foe:
+    return FoeFactory()
