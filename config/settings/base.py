@@ -83,6 +83,7 @@ LOCAL_APPS = [
     "sghymnal.players.apps.PlayersConfig",
     "sghymnal.rosters.apps.RostersConfig",
     "sghymnal.foes.apps.FoesConfig",
+    "sghymnal.songs.apps.SongsConfig",
     # Your stuff: custom apps go here
     # Third Party Django Cleanup
     "django_cleanup.apps.CleanupConfig",
