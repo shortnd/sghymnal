@@ -77,6 +77,30 @@ class TestFoeCreateView:
         assertContains(response, "Players")
         assert response.context_data["players"]
 
+    def test_create_view_post(self, rf: RequestFactory):
+        form_data = {
+            "opponent": "Random Name",
+            "competition": "",
+            "background_color": "#FF0000",
+            "accent_color": "#FFFF00",
+            "text_color": "#FFFFFF",
+            "season": "2020",
+            "active": 1,
+            "players-TOTAL_FORMS": 2,
+            "players-INITIAL_FORMS": 0,
+            "players-MIN_NUM_FORMS": 0,
+            "players-MAX_NUM_FORMS": 1000,
+            # "players-0-id": "",
+            # "players-0-foe": "",
+            # "players-0-name": "Test Player",
+            # "players-0-position": "Goalkeeper",
+            # "players-0-squad_number": 13,
+        }
+        request = rf.post(reverse("foes:create"), form_data)
+        request.user = UserFactory()
+        response = foe_create_view(request)
+        assert response.status_code == 302
+
 
 class TestFoeDetailView:
     def test_detail_view_redirects(self, foe: Foe, rf: RequestFactory):
@@ -96,20 +120,34 @@ class TestFoeDetailView:
         request = rf.get(reverse("foes:detail", kwargs={"uuid": foe.uuid}))
         request.user = UserFactory()
         response = foe_detail_view(request, uuid=foe.uuid)
-        assertContains(response, foe.opponent)
-        assertContains(response, foe.competition)
+        assertContains(response, f"{foe.opponent}")
+        assertContains(response, f"Competition: {foe.competition}")
         assertContains(response, foe.logo)
         assertContains(response, foe.background_color)
         assertContains(response, foe.accent_color)
         assertContains(response, foe.text_color)
-        assertContains(response, foe.season)
-        assertContains(response, foe.active)
+        assertContains(response, f"Season: {foe.season}")
+        assertContains(response, f"Active: {bool(foe.active)}")
 
     def test_detail_view_shows_foes_players(self, foe: Foe, rf: RequestFactory):
         request = rf.get(reverse("foes:detail", kwargs={"uuid": foe.uuid}))
         request.user = UserFactory()
         response = foe_detail_view(request, uuid=foe.uuid)
         assertContains(response, foe.players.all()[0].name)
+
+    def test_detail_contains_edit_link(self, foe: Foe, rf: RequestFactory):
+        request = rf.get(reverse("foes:detail", kwargs={"uuid": foe.uuid}))
+        request.user = UserFactory()
+        response = foe_detail_view(request, uuid=foe.uuid)
+        assertContains(response, reverse("foes:edit", kwargs={"uuid": foe.uuid}))
+        assertContains(response, "Edit Foe")
+
+    def test_detail_contains_delete_link(self, foe: Foe, rf: RequestFactory):
+        request = rf.get(reverse("foes:delete", kwargs={"uuid": foe.uuid}))
+        request.user = UserFactory()
+        response = foe_detail_view(request, uuid=foe.uuid)
+        assertContains(response, reverse("foes:delete", kwargs={"uuid": foe.uuid}))
+        assertContains(response, "Delete Foe")
 
 
 class TestFoeUpdateView:
@@ -131,6 +169,26 @@ class TestFoeUpdateView:
         request.user = UserFactory()
         response = foe_update_view(request, uuid=foe.uuid)
         assert response.context_data["players"]
+
+    def test_update_view_post(self, foe: Foe, rf: RequestFactory):
+        form_data = {
+            "opponent": "Random Name",
+            "competition": "",
+            "background_color": "#FF0000",
+            "accent_color": "#FFFF00",
+            "text_color": "#FFFFFF",
+            "season": "2020",
+            "active": 1,
+            "players-TOTAL_FORMS": 2,
+            "players-INITIAL_FORMS": 0,
+            "players-MIN_NUM_FORMS": 0,
+            "players-MAX_NUM_FORMS": 1000,
+        }
+        request = rf.post(reverse("foes:edit", kwargs={"uuid": foe.uuid}), form_data)
+        request.user = UserFactory()
+        response = foe_update_view(request, uuid=foe.uuid)
+        assert response.status_code == 302
+        assert response.url == f"/foes/{foe.uuid}/"
 
 
 class TestFoeDeleteView:

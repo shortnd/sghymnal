@@ -9,6 +9,7 @@ class FoeForm(ModelForm):
         fields = (
             "opponent",
             "logo",
+            "competition",
             "background_color",
             "accent_color",
             "text_color",

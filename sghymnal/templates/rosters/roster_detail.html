@@ -15,9 +15,12 @@
             <p>Default: {{ roster.default }}</p>
             <h2>Players</h2>
             {% for player in roster.players.all %}
-                <div>
-                    {{ player }}
-                </div>
+                <details>
+                    <summary>View Players</summary>
+                    <div class="border p-2">
+                        {{ player }}
+                    </div>
+                </details>
             {% empty %}
                 <h3>No Players in Roster</h3>
             {% endfor %}

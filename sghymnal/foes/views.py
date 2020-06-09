@@ -1,4 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db import transaction
+from django.shortcuts import get_object_or_404
 from django.views.generic import (
     CreateView,
     DeleteView,
@@ -6,10 +8,9 @@ from django.views.generic import (
     ListView,
     UpdateView,
 )
-from django.db import transaction
 
-from .models import Foe
 from .forms import FoeForm, FoePlayerFormset
+from .models import Foe
 
 
 class FoesListView(LoginRequiredMixin, ListView):
@@ -26,7 +27,7 @@ class FoeCreateView(LoginRequiredMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         if self.request.POST:
-            context["players"] = FoePlayerFormset(self.request.POSt)
+            context["players"] = FoePlayerFormset(self.request.POST)
         else:
             context["players"] = FoePlayerFormset()
         return context
@@ -34,33 +35,64 @@ class FoeCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         context = self.get_context_data()
         players = context["players"]
-        with transaction.atomic:
+        with transaction.atomic():
             self.object = form.save()
             if players.is_valid():
                 players.instance = self.object
                 players.save()
-            return super(FoeCreateView, self).form_valid(form)
+        return super(FoeCreateView, self).form_valid(form)
 
 
 foe_create_view = FoeCreateView.as_view()
 
 
-class FoeDetailView(DetailView):
+class FoeDetailView(LoginRequiredMixin, DetailView):
     model = Foe
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(Foe, uuid=self.kwargs.get("uuid"))
 
 
 foe_detail_view = FoeDetailView.as_view()
 
 
-class FoeUpdateView(UpdateView):
+class FoeUpdateView(LoginRequiredMixin, UpdateView):
     model = Foe
+    form_class = FoeForm
+    action = "Update"
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(Foe, uuid=self.kwargs.get("uuid"))
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.POST:
+            context["players"] = FoePlayerFormset(
+                self.request.POST, instance=self.object
+            )
+        else:
+            context["players"] = FoePlayerFormset(instance=self.object)
+        return context
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        players = context["players"]
+        with transaction.atomic():
+            self.object = form.save()
+            if players.is_valid():
+                players.instance = self.object
+                players.save()
+            return super(FoeUpdateView, self).form_valid(form)
 
 
 foe_update_view = FoeUpdateView.as_view()
 
 
-class FoeDeleteView(DeleteView):
+class FoeDeleteView(LoginRequiredMixin, DeleteView):
     model = Foe
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(Foe, uuid=self.kwargs.get("uuid"))
 
 
 foe_delete_view = FoeDeleteView.as_view()

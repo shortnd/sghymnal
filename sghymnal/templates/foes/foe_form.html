@@ -1,16 +1,52 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
+{% load static %}
 {% load widget_tweaks %}
 
 {% block title %}
-Create Foe
+{{ view.action|default:"Create" }} Foe
 {% endblock title %}
 
 {% block content %}
-    <h1>Create Foe</h1>
+    {% with action=view.action|default:"Create" %}
+    <h1>{{ action }} Foe</h1>
     <form action="" method="post">
         {% csrf_token %}
         {{ form|crispy }}
+        <table class="table">
+            <strong>Players</strong>
+            {{ players.management_form }}
+            {% for form in players.forms %}
+            <tr class="formset_row-{{ players.prefix }}">
+                {% for field in form.visible_fields %}
+                    <td>
+                        {% if forloop.first %}
+                            {% for hidden in form.hidden_fields %}
+                                {{ hidden }}
+                            {% endfor %}
+                        {% endif %}
+                        {{ field.label_tag }}
+                        <br>
+                        {{ field.errors.as_ul }}
+                        {{ field|add_class:"form-control" }}
+                    </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
         <button type="submit" class="btn btn-primary">Save</button>
     </form>
+    {% endwith %}
 {% endblock content %}
+
+{% block javascript %}
+{{ block.super }}
+<script src="{% static 'js/django-dynamic-formset/jquery.formset.js' %}"></script>
+<script>
+    $('.formset_row-{{ players.prefix }}').formset({
+        addText: "Add Player",
+        deleteText: "remove",
+        prefix: "{{ players.prefix }}"
+    });
+</script>
+{% endblock javascript %}

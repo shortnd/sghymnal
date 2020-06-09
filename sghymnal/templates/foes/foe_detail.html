@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ foe }}
+{% endblock title %}
+
+{% block content %}
+    <div class="card" style="border-color:{{ foe.accent_color }};border-radius:2px;">
+        <div class="card-header" style="background-color:{{ foe.background_color }};">
+            <h1 style="color: {{ foe.text_color }}">{{ foe.opponent }}</h1>
+        </div>
+        <div class="card-body">
+            {% if foe.competition %}
+                <p>
+                    Competition: {{ foe.competition }}
+                </p>
+            {% endif %}
+            {% if foe.logo %}
+                <img src="{{ foe.logo.url }}" alt="{{ foe.opponent }} logo" />
+            {% endif %}
+            {% if foe.season %}
+                <p>
+                    Season: {{ foe.season }}
+                </p>
+            {% endif %}
+            <p>
+                Active: {{ foe.active }}
+            </p>
+            <h2>Players</h2>
+            <details>
+                <summary>Total Players - {{ foe.players.count }}</summary>
+                {% if foe.players.all|length > 0 %}
+                    {% for player in foe.players.all %}
+                        <div class="border p-2">
+                            {{ player }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </details>
+        </div>
+        <div class="card-footer" style="background-color: {{ foe.background_color }}">
+            <a href="{% url 'foes:edit' foe.uuid %}" class="btn btn-success">Edit Foe</a>
+            <a href="{% url 'foes:delete' foe.uuid %}" class="btn btn-danger">Delete Foe</a>
+        </div>
+    </div>
+{% endblock content %}

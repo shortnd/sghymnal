@@ -10,7 +10,7 @@ All Foes
         <a href="{% url 'foes:create' %}" class="btn btn-primary">Create Foe</a>
     </div>
     {% for foe in object_list %}
-        <a href="{{ foe.get_absolute_url }}" class="card shadow border text-dark">
+        <a href="{{ foe.get_absolute_url }}" class="card shadow border text-dark mb-2">
             <span class="card-body">{{ foe }}</span>
         </a>
     {% empty %}
