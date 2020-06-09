@@ -1,4 +1,4 @@
-from django.db.models import CharField, TextField, URLField, ForeignKey, SET_NULL
+from django.db.models import SET_NULL, CharField, ForeignKey, TextField, URLField
 from django.urls import reverse
 
 from sghymnal.models import BaseModel
