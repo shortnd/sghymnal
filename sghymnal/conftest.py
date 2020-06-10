@@ -6,6 +6,8 @@ from sghymnal.players.models import Player
 from sghymnal.players.tests.factories import PlayerFactory
 from sghymnal.rosters.models import Roster
 from sghymnal.rosters.tests.factories import RosterFactory
+from sghymnal.songs.models import Song
+from sghymnal.songs.tests.factories import SongFactory
 from sghymnal.users.models import User
 from sghymnal.users.tests.factories import UserFactory
 
@@ -33,3 +35,8 @@ def roster() -> Roster:
 @pytest.fixture
 def foe() -> Foe:
     return FoeFactory()
+
+
+@pytest.fixture
+def song() -> Song:
+    return SongFactory()

@@ -14,7 +14,9 @@ class Song(BaseModel):
     sheet_music_link = URLField("Sheet Music Link", max_length=255, blank=True)
     legend = CharField("Legend", max_length=255, blank=True)
     capo_signal = CharField("Capo Signal", max_length=255, blank=True)
-    player = ForeignKey(Player, on_delete=SET_NULL, null=True, blank=True)
+    player = ForeignKey(
+        Player, on_delete=SET_NULL, null=True, blank=True, related_name="song"
+    )
 
     def __str__(self):
         return self.title

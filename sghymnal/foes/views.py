@@ -1,6 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
 from django.shortcuts import get_object_or_404
+from django.urls import reverse_lazy
 from django.views.generic import (
     CreateView,
     DeleteView,
@@ -90,6 +91,7 @@ foe_update_view = FoeUpdateView.as_view()
 
 class FoeDeleteView(LoginRequiredMixin, DeleteView):
     model = Foe
+    success_url = reverse_lazy("foes:list")
 
     def get_object(self, queryset=None):
         return get_object_or_404(Foe, uuid=self.kwargs.get("uuid"))

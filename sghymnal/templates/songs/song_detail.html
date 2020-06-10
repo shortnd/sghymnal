@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ song }}
+{% endblock title %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <h1>{{ song }}</h1>
+        </div>
+        <div class="card-body">
+            {% if song.instructions %}
+            <p>
+                Instructions: {{ song.instructions }}
+            </p>
+            {% endif %}
+            {% if song.lyrics %}
+            <p>
+                {{ song.lyrics|linebreaksbr }}
+            </p>
+            {% endif %}
+            {% if song.reference_title and song.reference_link %}
+            <p>
+                Reference Link: <a href="{{ song.reference_link }}" target="_blank">{{ song.reference_title }}</a>
+            </p>
+            {% endif %}
+            {% if song.sheet_music_link %}
+            <p>
+                Sheet Music Link: <a href="{{ song.sheet_music_link }}">{{ song.sheet_music_link }}</a>
+            </p>
+            {% endif %}
+            {% if song.legend %}
+            <p>
+                Legend: {{ song.legend }}
+            </p>
+            {% endif %}
+            {% if song.capo_signal %}
+            <p>
+                Capo Signal: {{ song.capo_signal}}
+            </p>
+            {% endif %}
+            {% if song.player %}
+                Player: {{ song.player }}
+            {% endif %}
+        </div>
+        <div class="card-footer">
+            <a href="{% url 'songs:edit' song.uuid %}" class="btn btn-success">Edit Song</a>
+            <a href="{% url 'songs:delete' song.uuid %}" class="btn btn-danger">Delete Song</a>
+        </div>
+    </div>
+{% endblock content %}
