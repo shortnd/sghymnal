@@ -1,6 +1,7 @@
 import pytest
 from django.contrib.auth.models import AnonymousUser
 from django.test import RequestFactory
+from pytest_django.asserts import assertContains, assertNotContains
 
 from ..api.views import SongsViewSet
 from ..models import Song
@@ -25,12 +26,11 @@ class TestSongViewSet:
 
     def test_get_detail(self, song: Song, rf: RequestFactory):
         song2 = SongFactory()
-        view = SongsViewSet()
+        view = SongsViewSet.as_view(actions={"get": "retrieve"}, detail=True)
 
         request = rf.get(f"/api/songs/{song.uuid}/")
         request.user = AnonymousUser()
+        response = view(request, uuid=song.uuid)
 
-        view.request = request
-
-        assert song in view.get_queryset()
-        assert song2 not in view.get_queryset()
+        assertContains(response, song)
+        assertNotContains(response, song2)
