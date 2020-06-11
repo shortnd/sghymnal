@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}
+All Songbooks
+{% endblock title %}
+
+{% block content %}
+    <div>
+        <h1>All Songbooks</h1>
+    </div>
+    {% for songbook in object_list %}
+        {{ songbook }}
+    {% empty %}
+        <h2>No Songbooks</h2>
+    {% endfor %}
+{% endblock content %}

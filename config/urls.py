@@ -21,6 +21,7 @@ urlpatterns = [
     path("rosters/", include("sghymnal.rosters.urls", namespace="rosters")),
     path("foes/", include("sghymnal.foes.urls", namespace="foes")),
     path("songs/", include("sghymnal.songs.urls", namespace="songs")),
+    path("songbooks/", include("sghymnal.songbooks.urls", namespace="songbooks")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # API URLS

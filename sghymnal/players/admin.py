@@ -17,5 +17,5 @@ class PlayerBioAdmin(StackedInline):
 @admin.register(Player)
 class PlayerAdmin(ModelAdmin):
     list_display = ["name", "squad_number", "country"]
-    seach_fields = ["name"]
+    search_fields = ["name"]
     inlines = [PlayerImageAdmin, PlayerBioAdmin]
