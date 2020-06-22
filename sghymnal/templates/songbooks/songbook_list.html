@@ -7,6 +7,7 @@ All Songbooks
 {% block content %}
     <div>
         <h1>All Songbooks</h1>
+        <a href="{% url 'songbooks:create' %}" class="btn btn-primary">Add Songbook</a>
     </div>
     {% for songbook in object_list %}
         {{ songbook }}

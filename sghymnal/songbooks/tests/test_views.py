@@ -1,6 +1,7 @@
 import pytest
 from django.contrib.auth.models import AnonymousUser
 from django.test import RequestFactory
+from django.urls import reverse
 from pytest_django.asserts import assertContains
 
 from sghymnal.users.tests.factories import UserFactory
@@ -46,6 +47,15 @@ class TestSongbooksListView:
         response = songbooks_list_view(request)
 
         assertContains(response, songbook)
+
+    def test_list_view_has_add_songbook_button(self, rf: RequestFactory):
+        request = rf.get("/songbooks/")
+        request.user = UserFactory()
+
+        response = songbooks_list_view(request)
+
+        assertContains(response, "Add Songbook")
+        assertContains(response, reverse("songbooks:create"))
 
 
 class TestSongbookCreateView:
