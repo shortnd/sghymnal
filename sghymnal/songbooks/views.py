@@ -8,8 +8,9 @@ from django.views.generic import (
     UpdateView,
 )
 
-from .forms import SongbookForm
+from .forms import SongbookForm, SongbookChapterFormSet
 from .models import Songbook
+from django.db import transaction
 
 
 class SongbooksListView(LoginRequiredMixin, ListView):
@@ -22,6 +23,24 @@ songbooks_list_view = SongbooksListView.as_view()
 class SongbookCreateView(LoginRequiredMixin, CreateView):
     model = Songbook
     form_class = SongbookForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.POST:
+            context["chapters"] = SongbookChapterFormSet(self.request.POST)
+        else:
+            context["chapters"] = SongbookChapterFormSet()
+        return context
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        chapters = context["chapters"]
+        with transaction.atomic():
+            self.object = form.save()
+            if chapters.is_valid():
+                chapters.instances = self.object
+                chapters.save()
+        return super(SongbookCreateView, self).form_valid(form)
 
 
 songbook_create_view = SongbookCreateView.as_view()

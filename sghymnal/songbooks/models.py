@@ -19,7 +19,7 @@ class Songbook(BaseModel):
     slug = AutoSlugField(
         "Songbook Slug", unique=True, always_update=False, populate_from="title"
     )
-    orginization = CharField("Orginization", max_length=255, blank=True)
+    organization = CharField("Organization", max_length=255, blank=True)
     description = CharField("Description", max_length=255, blank=True)
     front_cover = ImageField(
         "Front Cover", upload_to=songbook_front_cover_upload_path, blank=True

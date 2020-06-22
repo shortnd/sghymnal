@@ -75,3 +75,8 @@ class TestSongbookCreateView:
         response = songbook_create_view(request)
 
         assertContains(response, "Create Songbook")
+        assertContains(response, "Title")
+        assertContains(response, "Organization")
+        assertContains(response, "Front Cover")
+        assertContains(response, "Back Cover")
+        assertContains(response, "Chapters")

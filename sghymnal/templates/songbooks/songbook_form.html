@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
 
 {% block title %}
 {{ view.action|default:"Create" }} Songbook
@@ -6,4 +8,43 @@
 
 {% block content %}
     <h1>Create Songbook</h1>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <table class="table">
+            <strong>Chapters</strong>
+            {{ chapters.management_form }}
+            {% for form in chapters.forms %}
+            <tr class="formset_row-{{ chapters.prefix }}">
+                {% for field in form.visible_fields %}
+                    <td>
+                        {% if forloop.first %}
+                            {% for hidden in form.hidden_fields %}
+                                {{ hidden }}
+                            {% endfor %}
+                        {% endif %}
+                        {{ field.label_tag }}
+                        <br>
+                        {{ field.errors.as_ul }}
+                        {{ field }}
+                    </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
+        <button type="submit" class="btn btn-success">Save</a>
+    </form>
 {% endblock content %}
+
+
+{% block javascript %}
+{{ block.super }}
+<script src="{% static 'js/django-dynamic-formset/jquery.formset.js' %}"></script>
+<script>
+    $('.formset_row-{{ chapters.prefix }}').formset({
+        addText: "Add Chapter",
+        deleteText: "remove",
+        prefix: "{{ chapters.prefix }}"
+    });
+</script>
+{% endblock javascript %}

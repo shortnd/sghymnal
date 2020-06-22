@@ -10,7 +10,7 @@ from ..models import Chapter, Songbook
 
 class SongbookFactory(DjangoModelFactory):
     title = FuzzyText()
-    orginization = FuzzyText()
+    organization = FuzzyText()
     description = FuzzyText()
 
     class Meta:
