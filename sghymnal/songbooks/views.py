@@ -7,6 +7,7 @@ from django.views.generic import (
     ListView,
     UpdateView,
 )
+from django.shortcuts import get_object_or_404
 
 from .forms import SongbookForm, SongbookChapterFormSet
 from .models import Songbook
@@ -46,23 +47,34 @@ class SongbookCreateView(LoginRequiredMixin, CreateView):
 songbook_create_view = SongbookCreateView.as_view()
 
 
-class SongbookDetailView(DetailView):
+class SongbookDetailView(LoginRequiredMixin, DetailView):
     model = Songbook
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(Songbook, uuid=self.kwargs.get("uuid"))
 
 
 songbook_detail_view = SongbookDetailView.as_view()
 
 
-class SongbookUpdateView(UpdateView):
+class SongbookUpdateView(LoginRequiredMixin, UpdateView):
     model = Songbook
+    form_class = SongbookForm
+    action = "Update"
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(Songbook, uuid=self.kwargs.get("uuid"))
 
 
 songbook_update_view = SongbookUpdateView.as_view()
 
 
-class SongbookDeleteView(DeleteView):
+class SongbookDeleteView(LoginRequiredMixin, DeleteView):
     model = Songbook
     success_url = reverse_lazy("songbooks:list")
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(Songbook, uuid=self.kwargs.get("uuid"))
 
 
 songbook_delete_view = SongbookDeleteView.as_view()

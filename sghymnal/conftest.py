@@ -10,6 +10,8 @@ from sghymnal.songs.models import Song
 from sghymnal.songs.tests.factories import SongFactory
 from sghymnal.users.models import User
 from sghymnal.users.tests.factories import UserFactory
+from sghymnal.songbooks.models import Songbook, Chapter
+from sghymnal.songbooks.tests.factories import SongbookFactory, ChapterFactory
 
 
 @pytest.fixture(autouse=True)
@@ -40,3 +42,13 @@ def foe() -> Foe:
 @pytest.fixture
 def song() -> Song:
     return SongFactory()
+
+
+@pytest.fixture
+def songbook() -> Songbook:
+    return SongbookFactory()
+
+
+@pytest.fixture
+def chapter() -> Chapter:
+    return ChapterFactory()

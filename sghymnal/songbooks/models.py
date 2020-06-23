@@ -1,5 +1,6 @@
 from autoslug import AutoSlugField
 from django.db.models import CASCADE, CharField, ForeignKey, ManyToManyField
+from django.urls import reverse
 from sorl.thumbnail import ImageField
 
 from sghymnal.models import BaseModel
@@ -30,6 +31,9 @@ class Songbook(BaseModel):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse("songbooks:detail", kwargs={"uuid": self.uuid})
 
 
 class Chapter(BaseModel):

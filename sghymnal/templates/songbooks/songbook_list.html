@@ -10,7 +10,7 @@ All Songbooks
         <a href="{% url 'songbooks:create' %}" class="btn btn-primary">Add Songbook</a>
     </div>
     {% for songbook in object_list %}
-        {{ songbook }}
+        <a href="{% url 'songbooks:detail' songbook.uuid %}">{{ songbook }}</a>
     {% empty %}
         <h2>No Songbooks</h2>
     {% endfor %}
